@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class Login extends AppCompatActivity {
     DatabaseReference root;
     EditText username, password;
-    HashMap<String, ArrayList<String>> fbMap;
+    HashMap<String, HashMap<String, String>> fbMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,18 +46,16 @@ public class Login extends AppCompatActivity {
                             DataSnapshot receivedValue = task.getResult();
                             for(DataSnapshot node: receivedValue.getChildren())
                             {
-                                ArrayList<String> temp = new ArrayList<>();
-                                temp.add(node.getKey());
-
-                                temp.add(node.child("firstName").getValue().toString());
-                                temp.add(node.child("lastName").getValue().toString());
-                                temp.add(node.child("password").getValue().toString());
-
-                                temp.add(node.child("age").getValue().toString());
-                                temp.add(node.child("rider").getValue().toString());
-                                temp.add(node.child("driver").getValue().toString());
-                                temp.add(node.child("gender").getValue().toString());
-                                fbMap.put(node.getKey(), temp);
+                                HashMap<String, String> tempMap = new HashMap<>();
+                                tempMap.put("username", node.getKey());
+                                tempMap.put("firstName", node.child("firstName").getValue().toString());
+                                tempMap.put("lastName", node.child("lastName").getValue().toString());
+                                tempMap.put("password", node.child("password").getValue().toString());
+                                tempMap.put("password", node.child("password").getValue().toString());
+                                tempMap.put("rider", node.child("rider").getValue().toString());
+                                tempMap.put("driver", node.child("driver").getValue().toString());
+                                tempMap.put("gender", node.child("gender").getValue().toString());
+                                fbMap.put(node.getKey(), tempMap);
                             }
 
                             boolean t = true;
@@ -87,9 +85,9 @@ public class Login extends AppCompatActivity {
                 Context context = getApplicationContext();
                 Toast toast;
                 if(fbMap.containsKey(uid)){
-                    ArrayList<String> temp = fbMap.get(uid);
+                    HashMap<String, String> temp = fbMap.get(uid);
 
-                    String tempPass = temp.get(3);
+                    String tempPass = temp.get("password");
 
                     if(tempPass.equals(pw)){
                         //start next activity, pass necessary information as well
