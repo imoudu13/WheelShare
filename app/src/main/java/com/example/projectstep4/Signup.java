@@ -50,14 +50,14 @@ public class Signup extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String uId = userId.getText().toString();
                 String firstName = fName.getText().toString();
                 String lastName = lName.getText().toString();
                 String pw = password.getText().toString();
-                String ageOfCust = age.getText().toString();
-                String rider = riderBox.isChecked() ? "True" : "False";
-
-                String driver = driverBox.isChecked() ? "True" : "False";
+                int ageOfCust = Integer.parseInt(age.getText().toString());
+                boolean rider = riderBox.isChecked();
+                boolean driver = driverBox.isChecked();
 
                 String gender = "";
 
@@ -68,12 +68,11 @@ public class Signup extends AppCompatActivity {
                    gender = butt.getText().toString();
 
                 }
-
                 writeToFB(uId, firstName, lastName, pw, ageOfCust, rider, driver, gender);
             }
         });
     }
-    private void writeToFB(String username, String firstName, String lastName, String password, String age, String rider, String driver, String gender){
+    private void writeToFB(String username, String firstName, String lastName, String password, int age, boolean rider, boolean driver, String gender){
         DatabaseReference newCustomer = root.child(username);
 
         //set the username as a new child of the root
@@ -87,4 +86,5 @@ public class Signup extends AppCompatActivity {
 
         // should we add other information to the
     }
+
 }

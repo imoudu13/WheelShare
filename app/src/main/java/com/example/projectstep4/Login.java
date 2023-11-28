@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -51,7 +52,6 @@ public class Login extends AppCompatActivity {
                                 tempMap.put("firstName", node.child("firstName").getValue().toString());
                                 tempMap.put("lastName", node.child("lastName").getValue().toString());
                                 tempMap.put("password", node.child("password").getValue().toString());
-                                tempMap.put("password", node.child("password").getValue().toString());
                                 tempMap.put("rider", node.child("rider").getValue().toString());
                                 tempMap.put("driver", node.child("driver").getValue().toString());
                                 tempMap.put("gender", node.child("gender").getValue().toString());
@@ -93,6 +93,11 @@ public class Login extends AppCompatActivity {
                     if(tempPass.equals(pw)){
                         //start next activity, pass necessary information as well
                         toast = Toast.makeText(context, "This works.", Toast.LENGTH_SHORT);     //this is just for testing, will change later
+                        Intent intent = new Intent(Login.this, CreateOrJoin.class);
+
+                        //what information needs to be passed?
+                        startActivity(intent);
+
                     }else{
                         toast = Toast.makeText(context, "Incorrect password, please try again.", Toast.LENGTH_SHORT);
                     }
