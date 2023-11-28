@@ -84,6 +84,7 @@ public class Login extends AppCompatActivity {
 
                 Context context = getApplicationContext();
                 Toast toast;
+
                 if(fbMap.containsKey(uid)){
                     HashMap<String, String> temp = fbMap.get(uid);
 
