@@ -27,7 +27,8 @@ public class CreateOrJoin extends AppCompatActivity {
         join.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(CreateOrJoin.this, Create_ride.class);
+                startActivity(intent);
             }
         });
     }
