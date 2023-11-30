@@ -7,6 +7,7 @@
     tools:context=".Create_ride">
 
     <EditText
+        android:focusableInTouchMode="false"
         android:id="@+id/setTimeCreateRide"
         android:layout_width="100dp"
         android:layout_height="55dp"
@@ -77,14 +78,15 @@
         android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_marginEnd="248dp"
-        android:layout_marginBottom="584dp"
+        android:layout_marginEnd="228dp"
         android:gravity="center"
         android:text="Departure time"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView3" />
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.137" />
 
     <Button
         android:id="@+id/nextButton3"
@@ -107,5 +109,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/wheelChairCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="160dp"
+        android:text="Wheel Chair Accesibility"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
