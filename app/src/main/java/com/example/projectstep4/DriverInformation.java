@@ -44,14 +44,17 @@ public class DriverInformation extends AppCompatActivity {
 
                 intent = new Intent(DriverInformation.this, CreateOrJoin.class);
 
-                writeToFB((String)driverInfo.get("uid"), (String)driverInfo.get("firstName"), (String)driverInfo.get("lastName"), (String)driverInfo.get("pw"), Integer.parseInt((String)driverInfo.get("ageOfCust")), (String)driverInfo.get("rider"), (String)driverInfo.get("gender"));
+                writeToFB((String)driverInfo.get("uid"), (String)driverInfo.get("firstName"),
+                        (String)driverInfo.get("lastName"), (String)driverInfo.get("pw"),
+                        Integer.parseInt((String)driverInfo.get("ageOfCust")), (String)driverInfo.get("rider"),
+                        (String)driverInfo.get("gender"), licenseNo, crimHist);
 
                 intent.putExtra("information", driverInfo);
                 startActivity(intent);
             }
         });
     }
-    private void writeToFB(String username, String firstName, String lastName, String password, int age, String rider, String gender){
+    private void writeToFB(String username, String firstName, String lastName, String password, int age, String rider, String gender, String driverInfo, String crimHist){
         root = FirebaseDatabase.getInstance().getReference("driver");
         DatabaseReference newRider = root.child(username);
 
@@ -62,7 +65,8 @@ public class DriverInformation extends AppCompatActivity {
         newRider.child("age").setValue(age);
         newRider.child("rider").setValue(rider);
         newRider.child("gender").setValue(gender);
-
+        newRider.child("driver information").setValue(driverInfo);
+        newRider.child("criminal history").setValue(crimHist);
         // should we add other information to the
     }
 }

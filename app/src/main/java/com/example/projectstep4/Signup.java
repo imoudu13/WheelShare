@@ -2,6 +2,7 @@ package com.example.projectstep4;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,7 +40,7 @@ public class Signup extends AppCompatActivity {
         lName = findViewById(R.id.lastName);
         userId = findViewById(R.id.userId);
         password = findViewById(R.id.pw);
-        age = findViewById(R.id.bdate);
+        age = findViewById(R.id.age);
 
 
         //find radio group
@@ -65,48 +67,54 @@ public class Signup extends AppCompatActivity {
 
                 String gender = "";
 
+                boolean fillAllBoxes = !uId.equals("") && !firstName.equals("") && !lastName.equals("") && !pw.equals("") && ageOfCust > 0;
 
-                if(genderGroup.getCheckedRadioButtonId() != -1) {
-                    RadioButton butt = findViewById(genderGroup.getCheckedRadioButtonId());
+                if(fillAllBoxes){
+                    if(genderGroup.getCheckedRadioButtonId() != -1) {
+                        RadioButton butt = findViewById(genderGroup.getCheckedRadioButtonId());
 
-                   gender = butt.getText().toString();
+                        gender = butt.getText().toString();
 
-                }
+                    }
 
-                if(driver){
-                    HashMap<String, Object> driverInformation = new HashMap<>();
-                    driverInformation.put("uid", uId);
-                    driverInformation.put("firstName", firstName);
-                    driverInformation.put("lastName", lastName);
-                    driverInformation.put("pw", pw);
-                    driverInformation.put("ageOfCust", String.valueOf(ageOfCust));
-                    driverInformation.put("rider", rider ? "true" : "false");
-                    driverInformation.put("gender", gender);
+                    if(driver){
+                        HashMap<String, Object> driverInformation = new HashMap<>();
+                        driverInformation.put("uid", uId);
+                        driverInformation.put("firstName", firstName);
+                        driverInformation.put("lastName", lastName);
+                        driverInformation.put("pw", pw);
+                        driverInformation.put("ageOfCust", String.valueOf(ageOfCust));
+                        driverInformation.put("rider", rider ? "true" : "false");
+                        driverInformation.put("gender", gender);
 
-                    Intent intent = new Intent(Signup.this, DriverInformation.class);
-                    intent.putExtra("information", driverInformation);
+                        Intent intent = new Intent(Signup.this, DriverInformation.class);
+                        intent.putExtra("information", driverInformation);
 
-                    //what information needs to be passed?
-                    startActivity(intent);
+                        //what information needs to be passed?
+                        startActivity(intent);
+                    }else{
+                        writeToFB(uId, firstName, lastName, pw, ageOfCust, rider, gender);
+
+                        HashMap<String, Object> riderInfo = new HashMap<>();
+                        riderInfo.put("uid", uId);
+                        riderInfo.put("firstName", firstName);
+                        riderInfo.put("lastName", lastName);
+                        riderInfo.put("pw", pw);
+                        riderInfo.put("ageOfCust", String.valueOf(ageOfCust));
+                        riderInfo.put("rider", rider);
+                        riderInfo.put("gender", gender);
+
+                        Intent intent = new Intent(Signup.this, CreateOrJoin.class);
+                        intent.putExtra("info", riderInfo);
+
+                        //what information needs to be passed?
+                        startActivity(intent);
+                    }
                 }else{
-                    writeToFB(uId, firstName, lastName, pw, ageOfCust, rider, gender);
-
-                    HashMap<String, Object> riderInfo = new HashMap<>();
-                    riderInfo.put("uid", uId);
-                    riderInfo.put("firstName", firstName);
-                    riderInfo.put("lastName", lastName);
-                    riderInfo.put("pw", pw);
-                    riderInfo.put("ageOfCust", String.valueOf(ageOfCust));
-                    riderInfo.put("rider", rider);
-                    riderInfo.put("gender", gender);
-
-                    Intent intent = new Intent(Signup.this, CreateOrJoin.class);
-                    intent.putExtra("info", riderInfo);
-
-                    //what information needs to be passed?
-                    startActivity(intent);
+                    Context context = getApplicationContext();
+                    Toast toast = Toast.makeText(context, "Please make sure that you have completely filled out the form.", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
-
             }
         });
     }

@@ -16,6 +16,7 @@ public class CreateOrJoin extends AppCompatActivity {
 
         Button create = findViewById(R.id.createButton);
         Button join = findViewById(R.id.joinButton);
+        Intent intent = getIntent();
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override

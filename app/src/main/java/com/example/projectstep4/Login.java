@@ -15,23 +15,26 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Login extends AppCompatActivity {
     DatabaseReference root;
     EditText username, password;
-    HashMap<String, HashMap<String, String>> fbMap;
+    Map<String, HashMap<String, String>> clientMap;
+    private DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //find student tree
-        root = FirebaseDatabase.getInstance().getReference("customers");
+        root = FirebaseDatabase.getInstance().getReference("rider");
 
         //this retrieves all information from database and puts it in a hashmap to check
         OnCompleteListener<DataSnapshot> onValuesFetched = new
@@ -48,26 +51,25 @@ public class Login extends AppCompatActivity {
                             for(DataSnapshot node: receivedValue.getChildren())
                             {
                                 HashMap<String, String> tempMap = new HashMap<>();
+
                                 tempMap.put("username", node.getKey());
                                 tempMap.put("firstName", node.child("firstName").getValue().toString());
                                 tempMap.put("lastName", node.child("lastName").getValue().toString());
                                 tempMap.put("password", node.child("password").getValue().toString());
-                                tempMap.put("rider", node.child("rider").getValue().toString());
-                                tempMap.put("driver", node.child("driver").getValue().toString());
                                 tempMap.put("gender", node.child("gender").getValue().toString());
-                                fbMap.put(node.getKey(), tempMap);
-                            }
 
+                                clientMap.put(node.getKey(), tempMap);
+                            }
                             boolean t = true;
                         }
                     }
                 };
-
-
+        root.get().addOnCompleteListener(onValuesFetched);
+        root = FirebaseDatabase.getInstance().getReference("driver");
         root.get().addOnCompleteListener(onValuesFetched);
 
-        fbMap = new HashMap<>();
 
+        clientMap = new HashMap<>();
         //find views and buttons
         Button button = findViewById(R.id.LoginSubmit);
 
@@ -85,12 +87,12 @@ public class Login extends AppCompatActivity {
                 Context context = getApplicationContext();
                 Toast toast;
 
-                if(fbMap.containsKey(uid)){
-                    HashMap<String, String> temp = fbMap.get(uid);
+                if(clientMap.containsKey(uid)) {
+                    HashMap<String, String> temp = clientMap.get(uid);
 
                     String tempPass = temp.get("password");
 
-                    if(tempPass.equals(pw)){
+                    if (tempPass.equals(pw)) {
                         //start next activity, pass necessary information as well
                         toast = Toast.makeText(context, "This works.", Toast.LENGTH_SHORT);     //this is just for testing, will change later
                         Intent intent = new Intent(Login.this, CreateOrJoin.class);
@@ -98,7 +100,7 @@ public class Login extends AppCompatActivity {
                         //what information needs to be passed?
                         startActivity(intent);
 
-                    }else{
+                    } else {
                         toast = Toast.makeText(context, "Incorrect password, please try again.", Toast.LENGTH_SHORT);
                     }
                     toast.show();

@@ -60,19 +60,6 @@
 
     </RadioGroup>
 
-    <EditText
-        android:id="@+id/bdate"
-        android:layout_width="200dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Birthdate"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/lastName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/lastName"
-        app:layout_constraintTop_toBottomOf="@+id/lastName" />
-
     <Button
         android:id="@+id/submitButton"
         android:layout_width="150dp"
@@ -113,9 +100,9 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="Username"
-        app:layout_constraintEnd_toEndOf="@+id/bdate"
-        app:layout_constraintStart_toStartOf="@+id/bdate"
-        app:layout_constraintTop_toBottomOf="@+id/bdate" />
+        app:layout_constraintEnd_toEndOf="@+id/age"
+        app:layout_constraintStart_toStartOf="@+id/age"
+        app:layout_constraintTop_toBottomOf="@+id/age" />
 
     <EditText
         android:id="@+id/pw"
@@ -128,5 +115,18 @@
         app:layout_constraintEnd_toEndOf="@+id/userId"
         app:layout_constraintStart_toStartOf="@+id/userId"
         app:layout_constraintTop_toBottomOf="@+id/userId" />
+
+    <EditText
+        android:id="@+id/age"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/lastName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/lastName"
+        app:layout_constraintTop_toBottomOf="@+id/lastName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
