@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 public class DriverInformation extends AppCompatActivity {
     private EditText licenseNumber, criminalHistory;
-    private HashMap<String, Object> driverInfo;
+    private HashMap<String, String> driverInfo;
     Intent intent;
     private DatabaseReference root;
     @Override
@@ -23,15 +23,13 @@ public class DriverInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_information);
 
-        root = FirebaseDatabase.getInstance().getReference("customers");
-
         licenseNumber = findViewById(R.id.licenseBox);
         criminalHistory = findViewById(R.id.historyBox);
         Button finishButton = findViewById(R.id.button);
 
         intent = getIntent();
 
-        driverInfo = (HashMap<String, Object>) intent.getSerializableExtra("information");
+        driverInfo = (HashMap<String, String>) intent.getSerializableExtra("info");
 
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,7 +44,7 @@ public class DriverInformation extends AppCompatActivity {
 
                 writeToFB((String)driverInfo.get("uid"), (String)driverInfo.get("firstName"),
                         (String)driverInfo.get("lastName"), (String)driverInfo.get("pw"),
-                        Integer.parseInt((String)driverInfo.get("ageOfCust")), (String)driverInfo.get("rider"),
+                        Integer.parseInt((String)driverInfo.get("ageOfCust")),
                         (String)driverInfo.get("gender"), licenseNo, crimHist);
 
                 intent.putExtra("information", driverInfo);
@@ -54,7 +52,7 @@ public class DriverInformation extends AppCompatActivity {
             }
         });
     }
-    private void writeToFB(String username, String firstName, String lastName, String password, int age, String rider, String gender, String driverInfo, String crimHist){
+    private void writeToFB(String username, String firstName, String lastName, String password, int age, String gender, String driverInfo, String crimHist){
         root = FirebaseDatabase.getInstance().getReference("driver");
         DatabaseReference newRider = root.child(username);
 
@@ -63,7 +61,6 @@ public class DriverInformation extends AppCompatActivity {
         newRider.child("lastName").setValue(lastName);
         newRider.child("password").setValue(password);
         newRider.child("age").setValue(age);
-        newRider.child("rider").setValue(rider);
         newRider.child("gender").setValue(gender);
         newRider.child("driver information").setValue(driverInfo);
         newRider.child("criminal history").setValue(crimHist);

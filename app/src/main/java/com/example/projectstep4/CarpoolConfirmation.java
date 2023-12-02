@@ -18,7 +18,7 @@ public class CarpoolConfirmation extends AppCompatActivity {
 
         Button create = findViewById(R.id.createAnother);
         Button reportProblem = findViewById(R.id.problemButton);
-        Button findSim = findViewById(R.id.findSimilar);        //find simalr carpool button
+        Button findSim = findViewById(R.id.findSimilar);        //find similar carpool button
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,5 +41,6 @@ public class CarpoolConfirmation extends AppCompatActivity {
                 //go to find similar carpool page
             }
         });
+        //add a homepage button?
     }
 }

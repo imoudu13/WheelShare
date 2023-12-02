@@ -31,9 +31,6 @@ public class Signup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        root = FirebaseDatabase.getInstance().getReference("customers");
-
-
 
         //find the other view
         fName = findViewById(R.id.firstName);
@@ -67,41 +64,40 @@ public class Signup extends AppCompatActivity {
 
                 String gender = "";
 
+                //makes sure the clients fills out all necessary information
                 boolean fillAllBoxes = !uId.equals("") && !firstName.equals("") && !lastName.equals("") && !pw.equals("") && ageOfCust > 0;
-
                 if(fillAllBoxes){
+
                     if(genderGroup.getCheckedRadioButtonId() != -1) {
                         RadioButton butt = findViewById(genderGroup.getCheckedRadioButtonId());
 
                         gender = butt.getText().toString();
 
                     }
-
                     if(driver){
-                        HashMap<String, Object> driverInformation = new HashMap<>();
+                        HashMap<String, String> driverInformation = new HashMap<>();
+
                         driverInformation.put("uid", uId);
                         driverInformation.put("firstName", firstName);
                         driverInformation.put("lastName", lastName);
                         driverInformation.put("pw", pw);
-                        driverInformation.put("ageOfCust", String.valueOf(ageOfCust));
-                        driverInformation.put("rider", rider ? "true" : "false");
+                        driverInformation.put("age", String.valueOf(ageOfCust));
                         driverInformation.put("gender", gender);
 
                         Intent intent = new Intent(Signup.this, DriverInformation.class);
-                        intent.putExtra("information", driverInformation);
+                        intent.putExtra("info", driverInformation);
 
                         //what information needs to be passed?
                         startActivity(intent);
                     }else{
-                        writeToFB(uId, firstName, lastName, pw, ageOfCust, rider, gender);
+                        writeToFB(uId, firstName, lastName, pw, ageOfCust, gender);
 
-                        HashMap<String, Object> riderInfo = new HashMap<>();
+                        HashMap<String, String> riderInfo = new HashMap<>();
                         riderInfo.put("uid", uId);
                         riderInfo.put("firstName", firstName);
                         riderInfo.put("lastName", lastName);
                         riderInfo.put("pw", pw);
-                        riderInfo.put("ageOfCust", String.valueOf(ageOfCust));
-                        riderInfo.put("rider", rider);
+                        riderInfo.put("age", String.valueOf(ageOfCust));
                         riderInfo.put("gender", gender);
 
                         Intent intent = new Intent(Signup.this, CreateOrJoin.class);
@@ -115,10 +111,11 @@ public class Signup extends AppCompatActivity {
                     Toast toast = Toast.makeText(context, "Please make sure that you have completely filled out the form.", Toast.LENGTH_SHORT);
                     toast.show();
                 }
+
             }
         });
     }
-    private void writeToFB(String username, String firstName, String lastName, String password, int age, boolean rider, String gender){
+    private void writeToFB(String username, String firstName, String lastName, String password, int age, String gender){
         root = FirebaseDatabase.getInstance().getReference("rider");
         DatabaseReference newRider = root.child(username);
 
@@ -126,8 +123,7 @@ public class Signup extends AppCompatActivity {
         newRider.child("firstName").setValue(firstName);
         newRider.child("lastName").setValue(lastName);
         newRider.child("password").setValue(password);
-        newRider.child("age").setValue(age);
-        newRider.child("rider").setValue(rider);
+        newRider.child("age").setValue(String.valueOf(age));
         newRider.child("gender").setValue(gender);
 
         // should we add other information to the
