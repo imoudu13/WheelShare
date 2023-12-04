@@ -44,7 +44,7 @@ public class DriverInformation extends AppCompatActivity {
 
                 writeToFB((String)driverInfo.get("uid"), (String)driverInfo.get("firstName"),
                         (String)driverInfo.get("lastName"), (String)driverInfo.get("pw"),
-                        Integer.parseInt((String)driverInfo.get("ageOfCust")),
+                        Integer.parseInt((String)driverInfo.get("age")),
                         (String)driverInfo.get("gender"), licenseNo, crimHist);
 
                 intent.putExtra("information", driverInfo);

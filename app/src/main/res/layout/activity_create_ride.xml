@@ -89,25 +89,13 @@
         app:layout_constraintVertical_bias="0.137" />
 
     <Button
-        android:id="@+id/nextButton3"
-        android:layout_width="100dp"
-        android:layout_height="55dp"
-        android:layout_marginBottom="16dp"
-        android:text="Next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ProgressBar
-        android:id="@+id/progressBar4"
-        style="?android:attr/progressBarStyleHorizontal"
+        android:id="@+id/loadDriversButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="452dp"
+        android:text="Find Rides"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
@@ -120,5 +108,17 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+
+        android:id="@+id/driversListView"
+        android:layout_width="wrap_content"
+        android:layout_height="315dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loadDriversButton"
+        app:layout_constraintVertical_bias="0.299" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
