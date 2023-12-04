@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -39,14 +41,14 @@ public class Create_ride extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_ride);
-        setTime = (EditText) findViewById(R.id.setTimeCreateRide);
+        setTime = findViewById(R.id.setTimeCreateRide);
         startLocation = findViewById(R.id.startBoxCreateRide);
         endLocation = findViewById(R.id.endBoxCreateRide);
         accessibilityCheck = findViewById(R.id.wheelChairCheckBox);
         findRidesButton = findViewById(R.id.loadDriversButton);
         driversListView = findViewById(R.id.driversListView);
 
-        root = FirebaseDatabase.getInstance().getReference("customers");
+        root = FirebaseDatabase.getInstance().getReference("carpools");
         driversArrayList = new ArrayList<>();
         driversListView.setVisibility(View.INVISIBLE);
 
@@ -70,7 +72,17 @@ public class Create_ride extends AppCompatActivity {
                 timePicker(getCurrentFocus());
             }
         });
+            driversListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String usernameDriver = (String) parent.getItemAtPosition(position);
+                    Intent intent = new Intent(Create_ride.this, availableDriver.class);
+                    intent.putExtra("usernameDriver", usernameDriver);
+                    startActivity(intent);
+                }
+            });
     }
+
     public void timePicker(View v) {
         TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -120,9 +132,8 @@ public class Create_ride extends AppCompatActivity {
                             DataSnapshot receivedValue = task.getResult();
                             for(DataSnapshot node: receivedValue.getChildren())
                             {
-                                driversArrayList.add(node.child("firstName").getValue().toString());
-                                Toast.makeText(Create_ride.this, "fuck", Toast.LENGTH_SHORT).show();
-                                boolean t = true;
+                                driversArrayList.add(node.getKey() + " " + node.child("rating").getValue().toString() + "/5");
+                                //driversArrayList.add(node.child("firstName").getValue().toString());
                             }
 
                         }
