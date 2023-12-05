@@ -41,6 +41,7 @@ public class Create_ride extends AppCompatActivity {
     ListView driversListView;
     ArrayList<String> driversArrayList;
     private DatabaseReference root;
+
     double startLat;
     double startLong;
     double endLat;

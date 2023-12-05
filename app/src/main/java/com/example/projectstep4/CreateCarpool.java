@@ -3,7 +3,10 @@ package com.example.projectstep4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,15 +15,23 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TimePicker;
+import android.widget.Toast;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class CreateCarpool extends AppCompatActivity {
-    private EditText startLocation, endLocation, startTime, seatsAvailable;
+    private EditText startLoc, endLoc, startTime, seatsAvailable;
     private RadioGroup genderGroup;
     private CheckBox disabilityBox;
     HashMap<String, String> clientMap;
+    double startingPosLong = 0, startingPosLat = 0, endingPosLat = 0, endingPositionLong = 0;
     int hour,minute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +39,9 @@ public class CreateCarpool extends AppCompatActivity {
         setContentView(R.layout.activity_create_carpool);
 
         //find start and end location boxes
-        startLocation = findViewById(R.id.startBox);
-        endLocation = findViewById(R.id.endBox);
+        startLoc = findViewById(R.id.startLat);
+
+        endLoc = findViewById(R.id.endLong);
 
         //find gender Radio group
         genderGroup = findViewById(R.id.genderToOfferRideGroup);
@@ -55,37 +67,62 @@ public class CreateCarpool extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String startLoc = startLocation.getText().toString();
-                String endLoc = endLocation.getText().toString();
-                int deptTime = Integer.parseInt(startTime.getText().toString());
-                int availableSeats = Integer.parseInt(seatsAvailable.getText().toString());
-                boolean disability = disabilityBox.isChecked();
-                String gender = "";
+                String start = startLoc.getText().toString();
 
-                if(genderGroup.getCheckedRadioButtonId() != -1){
-                    RadioButton butt = findViewById(genderGroup.getCheckedRadioButtonId());
+                String end = endLoc.getText().toString();
 
-                    gender = butt.getText().toString();
+                boolean itWorks = true;//isNumeric(startLat) && isNumeric(startLong) && isNumeric(endLong) && isNumeric(endLat);
+
+                if(itWorks){
+                    String deptTime = startTime.getText().toString();
+                    int availableSeats = Integer.parseInt(seatsAvailable.getText().toString());
+                    boolean disability = disabilityBox.isChecked();
+                    String gender = "";
+
+                    if(genderGroup.getCheckedRadioButtonId() != -1){
+                        RadioButton butt = findViewById(genderGroup.getCheckedRadioButtonId());
+
+                        gender = butt.getText().toString();
+                    }else{
+                        gender = "all";
+                    }
+
+                    HashMap<String, Object> rideInformation = new HashMap<>();
+
+                    //populate the map with all the information about this ride
+                    rideInformation.put("depart", deptTime);
+                    rideInformation.put("seats", availableSeats);
+                    rideInformation.put("disability", disability ? "yes":"no");
+                    rideInformation.put("gender", gender);
+
+                    int numRides = Integer.parseInt(clientMap.get("numberOfRides"));
+                    numRides += 1;
+
+                    //write to FB
+                    writeToFB(clientMap.get("uid"), start, end, deptTime, clientMap.get("rating"), disability ? "yes" : "no", String.valueOf(numRides));
+
+                    Intent intent = new Intent(CreateCarpool.this, Maps.class);
+                    intent.putExtra("ride info", rideInformation);      //pass the ride information map
+                    intent.putExtra("client map", clientMap);           //pass the client information map
+
+                    getStartLatLong(start);
+                    getEndLatLong(end);
+
+                    ArrayList<Double> list = new ArrayList<>();
+
+                    list.add(startingPosLong);
+                    list.add(startingPosLat);
+                    list.add(endingPosLat);
+                    list.add(endingPositionLong);
+
+                    intent.putExtra("latlong", list);
+
+                    startActivity(intent);
                 }else{
-                    gender = "all";
+                    Context context = getApplicationContext();
+                    Toast toast = Toast.makeText(context, "Please enter a valid latitude and longitude for both start and end positions", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
-
-                HashMap<String, Object> rideInformation = new HashMap<>();
-
-                //populate the map with all the information about this ride
-                rideInformation.put("start", startLoc);
-                rideInformation.put("end", endLoc);
-                rideInformation.put("depart", deptTime);
-                rideInformation.put("seats", availableSeats);
-                rideInformation.put("disability", disability ? "yes":"no");
-                rideInformation.put("gender", gender);
-
-
-                Intent intent = new Intent(CreateCarpool.this, CarpoolConfirmation.class);
-                intent.putExtra("ride info", rideInformation);
-                intent.putExtra("client map", clientMap);
-
-                startActivity(intent);
             }
         });
 
@@ -103,5 +140,58 @@ public class CreateCarpool extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, false);
         timePickerDialog.setTitle("Select Time");
         timePickerDialog.show();
+    }
+    public void writeToFB(String username, String start, String end, String departureTime, String rating, String wheelchair, String number){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference("carpools");
+        DatabaseReference newRider = root.child(username);
+
+        //set the username as a new child of the root
+        newRider.child("start").setValue(start);
+        newRider.child("end").setValue(end);
+        newRider.child("depart").setValue(departureTime);
+        newRider.child("rating").setValue(rating);
+        newRider.child("disability").setValue(wheelchair);
+        newRider.child("numberOfRides").setValue(number);
+
+        root = FirebaseDatabase.getInstance().getReference("driver");
+        DatabaseReference update = root.child(username);
+        update.child("numberOfRides").removeValue();
+        update.child("numberOfRides").setValue(number);
+    }
+    public boolean getStartLatLong(String s){
+        Geocoder geocoder = new Geocoder(CreateCarpool.this);
+        List<Address> addressList;
+        try {
+            addressList = geocoder.getFromLocationName(s,1);
+            if(addressList.size() != 0){
+                startingPosLat = addressList.get(0).getLatitude();
+                startingPosLong = addressList.get(0).getLongitude();
+            }
+            else{
+                Toast.makeText(this, "Please enter a valid start location", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
+    public boolean getEndLatLong(String s){
+        Geocoder geocoder = new Geocoder(CreateCarpool.this);
+        List<Address> addressList;
+        try {
+            addressList = geocoder.getFromLocationName(s,1);
+            if(addressList.size() != 0){
+                endingPosLat = addressList.get(0).getLatitude();
+                endingPositionLong = addressList.get(0).getLongitude();
+            }
+            else{
+                Toast.makeText(this, "Please enter a valid end location", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
 }

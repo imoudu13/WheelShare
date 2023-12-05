@@ -39,6 +39,8 @@ public class DriverInformation extends AppCompatActivity {
 
                 driverInfo.put("license number", licenseNo);
                 driverInfo.put("criminal history", crimHist);
+                driverInfo.put("rating", "0");
+                driverInfo.put("numberOfRides", "0");
 
                 intent = new Intent(DriverInformation.this, CreateOrJoin.class);
 
@@ -47,7 +49,7 @@ public class DriverInformation extends AppCompatActivity {
                         Integer.parseInt((String)driverInfo.get("age")),
                         (String)driverInfo.get("gender"), licenseNo, crimHist);
 
-                intent.putExtra("information", driverInfo);
+                intent.putExtra("info", driverInfo);
                 startActivity(intent);
             }
         });
@@ -64,6 +66,8 @@ public class DriverInformation extends AppCompatActivity {
         newRider.child("gender").setValue(gender);
         newRider.child("driver information").setValue(driverInfo);
         newRider.child("criminal history").setValue(crimHist);
+        newRider.child("rating").setValue("0");
+        newRider.child("numberOfRides").setValue("0");
         // should we add other information to the
     }
 }

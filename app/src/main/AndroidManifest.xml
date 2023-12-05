@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -27,10 +28,10 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD2cajVsU9iTo7cjq0UTRMHwL_174k6NJc" />
+            android:value="${MAPS_API_KEY}" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".Maps"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
@@ -62,10 +63,6 @@
             android:exported="false"
             android:label="@string/title_activity_login"
             android:theme="@style/Theme.ProjectStep4" />
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

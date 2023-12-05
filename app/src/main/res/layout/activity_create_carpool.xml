@@ -7,35 +7,37 @@
     tools:context=".CreateCarpool">
 
     <EditText
-        android:id="@+id/endBox"
+        android:id="@+id/endLong"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="56dp"
         android:ems="10"
         android:hint="location"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
         android:gravity="center"
         android:text="End:"
         android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/endBox"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/startLat"
+        app:layout_constraintTop_toTopOf="@+id/startLat" />
 
     <EditText
-        android:id="@+id/startBox"
+        android:id="@+id/startLat"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="52dp"
         android:ems="10"
         android:hint="location"
         android:inputType="text"
@@ -46,8 +48,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="52dp"
         android:gravity="center"
         android:text="Start:"
         android:textSize="20sp"
@@ -58,9 +60,10 @@
         android:id="@+id/genderToOfferRideGroup"
         android:layout_width="240dp"
         android:layout_height="57dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@+id/textView7"
+        app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7">
 
@@ -87,7 +90,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="184dp"
         android:text="Select none for all"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,7 +102,7 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="228dp"
         android:gravity="center"
         android:text="Departure time:"
         android:textSize="20sp"
@@ -142,10 +145,11 @@
         android:id="@+id/nextButton"
         android:layout_width="100dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="52dp"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -165,10 +169,11 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="52dp"
+        android:layout_marginBottom="56dp"
         android:text="Select a gender you are willing to offer a ride"
         app:layout_constraintBottom_toTopOf="@+id/genderToOfferRideGroup"
         app:layout_constraintEnd_toEndOf="@+id/genderToOfferRideGroup"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="@+id/genderToOfferRideGroup" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

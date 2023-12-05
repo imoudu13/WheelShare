@@ -52,12 +52,13 @@ public class Login extends AppCompatActivity {
                             {
                                 HashMap<String, String> tempMap = new HashMap<>();
 
-                                tempMap.put("username", node.getKey());
+                                tempMap.put("uid", node.getKey());
                                 tempMap.put("firstName", node.child("firstName").getValue().toString());
                                 tempMap.put("lastName", node.child("lastName").getValue().toString());
                                 tempMap.put("password", node.child("password").getValue().toString());
                                 tempMap.put("gender", node.child("gender").getValue().toString());
-
+                                tempMap.put("rating", node.child("rating").getValue().toString());
+                                tempMap.put("numberOfRides", node.child("numberOfRides").getValue().toString());
                                 clientMap.put(node.getKey(), tempMap);
                             }
                             boolean t = true;
@@ -96,7 +97,7 @@ public class Login extends AppCompatActivity {
                         //start next activity, pass necessary information as well
                         toast = Toast.makeText(context, "This works.", Toast.LENGTH_SHORT);     //this is just for testing, will change later
                         Intent intent = new Intent(Login.this, CreateOrJoin.class);
-
+                        intent.putExtra("info", temp);
                         //what information needs to be passed?
                         startActivity(intent);
 

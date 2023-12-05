@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -44,7 +43,7 @@ public class Signup extends AppCompatActivity {
         genderGroup = findViewById(R.id.radioGroup);
 
         //find check boxes
-        riderBox = findViewById(R.id.riderbox);
+        riderBox = findViewById(R.id.disability);
         driverBox = findViewById(R.id.driverBox);
 
         //submit button
@@ -90,16 +89,16 @@ public class Signup extends AppCompatActivity {
                         //what information needs to be passed?
                         startActivity(intent);
                     }else{
-                        writeToFB(uId, firstName, lastName, pw, ageOfCust, gender);
+                        writeToFB(uId, firstName, lastName, pw, ageOfCust, gender, rider ? "yes" : "no");
 
                         HashMap<String, String> riderInfo = new HashMap<>();
                         riderInfo.put("uid", uId);
                         riderInfo.put("firstName", firstName);
                         riderInfo.put("lastName", lastName);
-                        riderInfo.put("pw", pw);
+                        riderInfo.put("password", pw);
                         riderInfo.put("age", String.valueOf(ageOfCust));
                         riderInfo.put("gender", gender);
-
+                        riderInfo.put("rating", "0");
                         Intent intent = new Intent(Signup.this, CreateOrJoin.class);
                         intent.putExtra("info", riderInfo);
 
@@ -115,7 +114,7 @@ public class Signup extends AppCompatActivity {
             }
         });
     }
-    private void writeToFB(String username, String firstName, String lastName, String password, int age, String gender){
+    private void writeToFB(String username, String firstName, String lastName, String password, int age, String gender, String disability){
         root = FirebaseDatabase.getInstance().getReference("rider");
         DatabaseReference newRider = root.child(username);
 
@@ -125,6 +124,12 @@ public class Signup extends AppCompatActivity {
         newRider.child("password").setValue(password);
         newRider.child("age").setValue(String.valueOf(age));
         newRider.child("gender").setValue(gender);
+        newRider.child("rating").setValue("0");
+        newRider.child("numberOfRides").setValue("0");
+        newRider.child("disabilities").setValue(disability);
+        newRider.child("start").setValue("");
+        newRider.child("end").setValue("");
+        newRider.child("depart").setValue("");
 
         // should we add other information to the
     }
