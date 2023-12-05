@@ -10,18 +10,20 @@
         android:id="@+id/createButton"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="125dp"
-        android:layout_marginEnd="116dp"
         android:text="Create a Carpool"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/joinButton"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="8dp"
         android:text="Join a Carpool"
-        app:layout_constraintEnd_toEndOf="@+id/createButton"
-        app:layout_constraintTop_toBottomOf="@+id/createButton" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

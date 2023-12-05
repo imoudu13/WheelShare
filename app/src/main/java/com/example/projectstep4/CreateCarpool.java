@@ -105,19 +105,23 @@ public class CreateCarpool extends AppCompatActivity {
                     intent.putExtra("ride info", rideInformation);      //pass the ride information map
                     intent.putExtra("client map", clientMap);           //pass the client information map
 
-                    getStartLatLong(start);
-                    getEndLatLong(end);
+                    if(getStartLatLong(start)){
+                        if(getEndLatLong(end)){
+                            ArrayList<Double> list = new ArrayList<>();
 
-                    ArrayList<Double> list = new ArrayList<>();
+                            list.add(startingPosLong);
+                            list.add(startingPosLat);
+                            list.add(endingPosLat);
+                            list.add(endingPositionLong);
 
-                    list.add(startingPosLong);
-                    list.add(startingPosLat);
-                    list.add(endingPosLat);
-                    list.add(endingPositionLong);
+                            intent.putExtra("latlong", list);
 
-                    intent.putExtra("latlong", list);
+                            startActivity(intent);
+                        }
+                    }
 
-                    startActivity(intent);
+
+
                 }else{
                     Context context = getApplicationContext();
                     Toast toast = Toast.makeText(context, "Please enter a valid latitude and longitude for both start and end positions", Toast.LENGTH_SHORT);

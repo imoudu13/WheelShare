@@ -41,6 +41,7 @@ public class DriverInformation extends AppCompatActivity {
                 driverInfo.put("criminal history", crimHist);
                 driverInfo.put("rating", "0");
                 driverInfo.put("numberOfRides", "0");
+                driverInfo.put("isRider", "false");
 
                 intent = new Intent(DriverInformation.this, CreateOrJoin.class);
 
@@ -68,6 +69,8 @@ public class DriverInformation extends AppCompatActivity {
         newRider.child("criminal history").setValue(crimHist);
         newRider.child("rating").setValue("0");
         newRider.child("numberOfRides").setValue("0");
+        newRider.child("isRider").setValue(false);
+
         // should we add other information to the
     }
 }

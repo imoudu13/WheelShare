@@ -21,6 +21,13 @@ public class CreateOrJoin extends AppCompatActivity {
         Intent intent = getIntent();
 
         map = (HashMap<String, String>) intent.getSerializableExtra("info");
+        String isRider = map.get("isRider");
+        if(isRider.equals("true")){
+            create.setVisibility(View.INVISIBLE);
+        }
+        if(isRider.equals("false")){
+            join.setVisibility(View.INVISIBLE);
+        }
 
         create.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -99,6 +99,7 @@ public class Signup extends AppCompatActivity {
                         riderInfo.put("age", String.valueOf(ageOfCust));
                         riderInfo.put("gender", gender);
                         riderInfo.put("rating", "0");
+                        riderInfo.put("isRider", "true");
                         Intent intent = new Intent(Signup.this, CreateOrJoin.class);
                         intent.putExtra("info", riderInfo);
 
@@ -130,6 +131,7 @@ public class Signup extends AppCompatActivity {
         newRider.child("start").setValue("");
         newRider.child("end").setValue("");
         newRider.child("depart").setValue("");
+        newRider.child("isRider").setValue(true);
 
         // should we add other information to the
     }

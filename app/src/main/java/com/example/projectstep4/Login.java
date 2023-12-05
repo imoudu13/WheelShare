@@ -53,12 +53,14 @@ public class Login extends AppCompatActivity {
                                 HashMap<String, String> tempMap = new HashMap<>();
 
                                 tempMap.put("uid", node.getKey());
-                                tempMap.put("firstName", node.child("firstName").getValue().toString());
-                                tempMap.put("lastName", node.child("lastName").getValue().toString());
-                                tempMap.put("password", node.child("password").getValue().toString());
-                                tempMap.put("gender", node.child("gender").getValue().toString());
-                                tempMap.put("rating", node.child("rating").getValue().toString());
-                                tempMap.put("numberOfRides", node.child("numberOfRides").getValue().toString());
+                                tempMap.put("firstName", getStringValue(node.child("firstName")));
+                                tempMap.put("lastName", getStringValue(node.child("lastName")));
+                                tempMap.put("password", getStringValue(node.child("password")));
+                                tempMap.put("gender", getStringValue(node.child("gender")));
+                                tempMap.put("rating", getStringValue(node.child("rating")));
+                                tempMap.put("numberOfRides", getStringValue(node.child("numberOfRides")));
+                                tempMap.put("isRider",getStringValue(node.child("isRider")));
+
 
 
 
@@ -116,5 +118,9 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+    private String getStringValue(DataSnapshot dataSnapshot) {
+        Object value = dataSnapshot.getValue();
+        return (value != null) ? value.toString() : "";
     }
 }
