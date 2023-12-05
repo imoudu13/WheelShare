@@ -7,14 +7,26 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 public class availableDriver extends AppCompatActivity {
-    TextView abadaba;
+    TextView driverName;
+    String[] driverInfo;
+    TextView rating;
+    TextView numRides;
+    TextView cost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_available_driver);
-        abadaba  =findViewById(R.id.abadaba);
+        driverName =findViewById(R.id.driverName);
+        rating = findViewById(R.id.driverRating);
+        numRides = findViewById(R.id.driverNumRides);
+        cost = findViewById(R.id.rideCost);
         Intent intent = getIntent();
-        String username = intent.getExtras().getString("usernameDriver");
-        abadaba.setText(username);
+        String info = intent.getExtras().getString("usernameDriver");
+        driverInfo = info.split(" ");
+
+        driverName.setText(driverInfo[0]);
+        rating.setText(driverInfo[1]);
+        numRides.setText(driverInfo[2]);
+
     }
 }
