@@ -68,14 +68,30 @@ public class CreateCarpool extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String start = startLoc.getText().toString();
+                if(start.equals("")){
+                    Toast.makeText(CreateCarpool.this, "Please enter a start location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 String end = endLoc.getText().toString();
-
+                if(end.equals("")){
+                    Toast.makeText(CreateCarpool.this, "Please enter a end location", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 boolean itWorks = true;//isNumeric(startLat) && isNumeric(startLong) && isNumeric(endLong) && isNumeric(endLat);
 
                 if(itWorks){
                     String deptTime = startTime.getText().toString();
+                    if(deptTime.equals("")){
+                        Toast.makeText(CreateCarpool.this, "Please enter a departure time", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(seatsAvailable.getText().toString().equals("")){
+                        Toast.makeText(CreateCarpool.this, "Please enter a number of seats available", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     int availableSeats = Integer.parseInt(seatsAvailable.getText().toString());
+
                     boolean disability = disabilityBox.isChecked();
                     String gender = "";
 
