@@ -76,7 +76,7 @@ public class confirmRide extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkInfo(cardName.getText().toString(), cardNum.getText().toString(), cardSecurityCode.getText().toString(), cardExpiration.getText().toString())){
-                    writeToFB(username,start,end,time,rating,wheel);
+                    writeToFB(username,start,end,time,rating,wheel, total);
                     Intent intent = new Intent(confirmRide.this, Maps.class);
 
                     ArrayList<Double> list = new ArrayList<>();
@@ -114,7 +114,7 @@ public class confirmRide extends AppCompatActivity {
 
         return true;
     }
-    public void writeToFB(String username, String start, String end, String departureTime, String rating, String wheelchair){
+    public void writeToFB(String username, String start, String end, String departureTime, String rating, String wheelchair, double cost){
         DatabaseReference root = FirebaseDatabase.getInstance().getReference("currentRides");
         DatabaseReference newRider = root.child(username);
 
@@ -124,7 +124,8 @@ public class confirmRide extends AppCompatActivity {
         newRider.child("depart").setValue(departureTime);
         newRider.child("rating").setValue(rating);
         newRider.child("disability").setValue(wheelchair);
-
+        newRider.child("cost").setValue(cost);
+        newRider.child("gender").setValue(clientMap.get("gender"));
 
 
     }
