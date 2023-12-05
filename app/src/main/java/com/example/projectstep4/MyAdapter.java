@@ -1,50 +1,62 @@
 package com.example.projectstep4;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-//Adapter class for the carpool created activity
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
+
+public class MyAdapter extends BaseAdapter {
     private List<ListModel> dataList;
+    private LayoutInflater inflater;
 
-    public MyAdapter(List<ListModel> dataList) {
+    public MyAdapter(Context context, List<ListModel> dataList) {
         this.dataList = dataList;
-    }
-
-    @NonNull
-    @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
-        return new MyViewHolder(view);
+        this.inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        ListModel data = dataList.get(position);
-        holder.textName.setText(data.getName());
-        holder.ratingBar.setRating(data.getStarRating());
-    }
-
-    @Override
-    public int getItemCount() {
+    public int getCount() {
         return dataList.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public Object getItem(int position) {
+        return dataList.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.item_layout, parent, false);
+            holder = new ViewHolder();
+            holder.textName = convertView.findViewById(R.id.textView12);
+            holder.ratingBar = convertView.findViewById(R.id.ratingBar);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        ListModel data = dataList.get(position);
+        holder.textName.setText(data.getName());
+        holder.ratingBar.setRating(data.getStarRating());
+
+        return convertView;
+    }
+
+    static class ViewHolder {
         TextView textName;
         RatingBar ratingBar;
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textName = itemView.findViewById(R.id.textView12);
-            ratingBar = itemView.findViewById(R.id.ratingBar);
-        }
     }
 }

@@ -25,7 +25,7 @@ public class DriverInformation extends AppCompatActivity {
 
         licenseNumber = findViewById(R.id.licenseBox);
         criminalHistory = findViewById(R.id.historyBox);
-        Button finishButton = findViewById(R.id.button);
+        Button finishButton = findViewById(R.id.startButton);
 
         intent = getIntent();
 

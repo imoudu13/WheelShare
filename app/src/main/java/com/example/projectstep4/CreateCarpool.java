@@ -117,7 +117,7 @@ public class CreateCarpool extends AppCompatActivity {
                     //write to FB
                     writeToFB(clientMap.get("uid"), start, end, deptTime, clientMap.get("rating"), disability ? "yes" : "no", String.valueOf(numRides));
 
-                    Intent intent = new Intent(CreateCarpool.this, Maps.class);
+                    Intent intent = new Intent(CreateCarpool.this, CarpoolCreated.class);
                     intent.putExtra("ride info", rideInformation);      //pass the ride information map
                     intent.putExtra("client map", clientMap);           //pass the client information map
 
