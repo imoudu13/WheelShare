@@ -27,7 +27,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,7 +71,12 @@ public class Create_ride extends AppCompatActivity {
                 if(checkInfo(start,end,departTime)){
                     if(getStartLatLong(start)){
                         if(getEndLatLong(end)){
-                            displayDrivers();
+                            Intent intent = new Intent(Create_ride.this, confirmRide.class);
+                            intent.putExtra("startLat", startLat);
+                            intent.putExtra("startLong", startLong);
+                            intent.putExtra("endLat", endLat);
+                            intent.putExtra("endLong", endLong);
+                            startActivity(intent);
                         }
                     }
 
@@ -86,15 +90,7 @@ public class Create_ride extends AppCompatActivity {
                 timePicker(getCurrentFocus());
             }
         });
-            driversListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String usernameDriver = (String) parent.getItemAtPosition(position);
-                    Intent intent = new Intent(Create_ride.this, availableDriver.class);
-                    intent.putExtra("usernameDriver", usernameDriver);
-                    startActivity(intent);
-                }
-            });
+
     }
 
     public void timePicker(View v) {
@@ -129,37 +125,6 @@ public class Create_ride extends AppCompatActivity {
         return true;
     }
 
-    public void displayDrivers(){
-        OnCompleteListener<DataSnapshot> onValuesFetched = new
-                OnCompleteListener<DataSnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task)
-                    {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
-                            Toast.makeText(Create_ride.this, "Error Getting Data", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            driversArrayList = new ArrayList<>();
-                            DataSnapshot receivedValue = task.getResult();
-                            for(DataSnapshot node: receivedValue.getChildren())
-                            {
-                                driversArrayList.add(node.getKey() + " " + node.child("rating").getValue().toString() + "/5" + " " + node.child("numberOfRides").getValue().toString() + " " + node.child("start").getValue().toString() + " " + node.child("end").getValue().toString());
-                                //driversArrayList.add(node.child("firstName").getValue().toString());
-                            }
-
-                        }
-                        // tempMap.put("firstName", node.child("firstName").getValue().toString());
-                        ArrayAdapter arrayAdapter = new ArrayAdapter(Create_ride.this, android.R.layout.simple_list_item_1, driversArrayList);
-                        driversListView.setAdapter(arrayAdapter);
-                    }
-                };
-        root.get().addOnCompleteListener(onValuesFetched);
-        driversListView.setVisibility(View.VISIBLE);
-
-    }
         public boolean getStartLatLong(String s){
             Geocoder geocoder = new Geocoder(Create_ride.this);
             List<Address> addressList;
