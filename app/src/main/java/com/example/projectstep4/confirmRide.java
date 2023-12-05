@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class confirmRide extends AppCompatActivity {
     TextView feeBreakdown;
 
     TextView costTextView;
     Button backButton;
+    Button payAndConfirm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,7 @@ public class confirmRide extends AppCompatActivity {
         feeBreakdown = findViewById(R.id.feeBreakdown);
         backButton = findViewById(R.id.backButton);
         costTextView = findViewById(R.id.rideCost);
+        payAndConfirm = findViewById(R.id.payAndConfirmButton);
         Intent intent = getIntent();
         double startLat = intent.getExtras().getDouble("startLat");
         double startLong = intent.getExtras().getDouble("startLong");
@@ -38,6 +42,23 @@ public class confirmRide extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        payAndConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(confirmRide.this, Maps.class);
+
+                ArrayList<Double> list = new ArrayList<>();
+
+                list.add(startLong);
+                list.add(startLat);
+                list.add(endLat);
+                list.add(endLong);
+
+                intent.putExtra("latlong", list);
+
+                startActivity(intent);
             }
         });
 

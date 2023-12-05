@@ -21,7 +21,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private ActivityMaps2Binding binding;
     double startingPosLong = 0, startingPosLat = 0, endingPosLat = 0, endingPositionLong = 0;
-    ArrayList<Double> lsit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +29,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         setContentView(binding.getRoot());
 
         Intent intent = getIntent();
-
-        ArrayList<Double> lsit = (ArrayList<Double>) intent.getSerializableExtra("latlong");
-
-        startingPosLong = lsit.get(0);
-        startingPosLat = lsit.get(0);
-        endingPosLat = lsit.get(0);
-        endingPositionLong = lsit.get(0);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -62,7 +54,5 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(end).title("finish"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(start));
     }
-    public ArrayList<Double> getPos(){
-        return  lsit;
-    }
+
 }
