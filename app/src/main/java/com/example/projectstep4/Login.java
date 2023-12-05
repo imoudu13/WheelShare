@@ -59,6 +59,9 @@ public class Login extends AppCompatActivity {
                                 tempMap.put("gender", node.child("gender").getValue().toString());
                                 tempMap.put("rating", node.child("rating").getValue().toString());
                                 tempMap.put("numberOfRides", node.child("numberOfRides").getValue().toString());
+
+
+
                                 clientMap.put(node.getKey(), tempMap);
                             }
                             boolean t = true;

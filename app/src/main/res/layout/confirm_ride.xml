@@ -6,6 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".confirmRide">
 
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/cardExpire"
+        android:layout_width="182dp"
+        android:layout_height="52dp"
+        android:hint="Expiration Date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.605" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/cardName"
+        android:layout_width="182dp"
+        android:layout_height="52dp"
+        android:hint="Name on card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.069"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.503" />
+
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
@@ -23,7 +47,6 @@
         android:id="@+id/rideCost"
         android:layout_width="188dp"
         android:layout_height="30dp"
-        android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +94,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.171" />
 
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Credit Card Info:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.437" />
+
     <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
@@ -81,7 +117,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831" />
+        app:layout_constraintVertical_bias="0.937" />
 
     <Button
         android:id="@+id/payAndConfirmButton"
@@ -90,7 +126,37 @@
         android:text="Pay and Confirm Ride"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.734" />
+        app:layout_constraintVertical_bias="0.843" />
+
+    <EditText
+        android:id="@+id/cardNum"
+        android:layout_width="189dp"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:hint="Card Number"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.501" />
+
+    <EditText
+        android:id="@+id/cardSecurity"
+        android:layout_width="189dp"
+        android:layout_height="55dp"
+        android:ems="10"
+        android:hint="Security Code"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.918"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.603" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

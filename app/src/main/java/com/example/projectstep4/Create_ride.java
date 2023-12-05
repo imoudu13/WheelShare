@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -40,7 +41,7 @@ public class Create_ride extends AppCompatActivity {
     ListView driversListView;
     ArrayList<String> driversArrayList;
     private DatabaseReference root;
-
+    CheckBox wheelchair;
     double startLat;
     double startLong;
     double endLat;
@@ -54,11 +55,12 @@ public class Create_ride extends AppCompatActivity {
         endLocation = findViewById(R.id.endBoxCreateRide);
         accessibilityCheck = findViewById(R.id.wheelChairCheckBox);
         findRidesButton = findViewById(R.id.loadDriversButton);
-        driversListView = findViewById(R.id.driversListView);
+        wheelchair = findViewById(R.id.wheelChairCheckBox);
+        Intent intent = getIntent();
+        HashMap<String, String> clientMap = (HashMap<String, String>) intent.getSerializableExtra("info");
 
         root = FirebaseDatabase.getInstance().getReference("carpools");
-        driversArrayList = new ArrayList<>();
-        driversListView.setVisibility(View.INVISIBLE);
+
 
 
         findRidesButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +70,7 @@ public class Create_ride extends AppCompatActivity {
                 String start = startLocation.getText().toString();
                 String end = endLocation.getText().toString();
                 String departTime = setTime.getText().toString();
+                Boolean isWheelchair = wheelchair.isChecked();
                 if(checkInfo(start,end,departTime)){
                     if(getStartLatLong(start)){
                         if(getEndLatLong(end)){
@@ -76,6 +79,11 @@ public class Create_ride extends AppCompatActivity {
                             intent.putExtra("startLong", startLong);
                             intent.putExtra("endLat", endLat);
                             intent.putExtra("endLong", endLong);
+                            intent.putExtra("start", start);
+                            intent.putExtra("end", end);
+                            intent.putExtra("time", departTime);
+                            intent.putExtra("wheelchair",isWheelchair);
+                            intent.putExtra("info", clientMap);
                             startActivity(intent);
                         }
                     }
