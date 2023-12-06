@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,6 +54,10 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(start).title("Start"));
         mMap.addMarker(new MarkerOptions().position(end).title("finish"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(start));
+    }
+    public void endRide(View view){
+        /*We need the rider and driver info/uid from previous intent
+        * to be sent here*/
     }
 
 }
