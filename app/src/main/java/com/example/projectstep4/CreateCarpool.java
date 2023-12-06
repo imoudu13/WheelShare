@@ -99,14 +99,14 @@ public class CreateCarpool extends AppCompatActivity {
                         RadioButton butt = findViewById(genderGroup.getCheckedRadioButtonId());
 
                         gender = butt.getText().toString();
-                    }else{
-                        gender = "all";
                     }
 
                     HashMap<String, Object> rideInformation = new HashMap<>();
 
                     //populate the map with all the information about this ride
                     rideInformation.put("depart", deptTime);
+                    rideInformation.put("start",start);
+                    rideInformation.put("end",end);
                     rideInformation.put("seats", availableSeats);
                     rideInformation.put("disability", disability ? "yes":"no");
                     rideInformation.put("gender", gender);

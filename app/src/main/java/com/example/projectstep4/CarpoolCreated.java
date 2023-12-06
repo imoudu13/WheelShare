@@ -40,10 +40,17 @@ public class CarpoolCreated extends AppCompatActivity {
         ridersListView = findViewById(R.id.ridersListView);
         Intent intent = getIntent();
         ArrayList<Double> list = (ArrayList<Double>) intent.getSerializableExtra("latlong");
+        HashMap<String, Object> rideInformation = (HashMap<String, Object>) intent.getSerializableExtra("ride info");
 
         Map<String, HashMap<String, String>>  ridersMap = new HashMap<>();
         root = FirebaseDatabase.getInstance().getReference("currentRides");
 
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //this retrieves all information from database and puts it in a hashmap to check
         OnCompleteListener<DataSnapshot> onValuesFetched = new
                 OnCompleteListener<DataSnapshot>()
@@ -83,10 +90,22 @@ public class CarpoolCreated extends AppCompatActivity {
                             HashMap<String, String> currRider = ridersMap.get(keyList.get(i));
                             String uid = currRider.get("uid");
                             Float rating = Float.parseFloat(currRider.get("rating"));
-                            if(true){
+                            String deptTime = (String)rideInformation.get("depart");
+                            String[] timeDriver =  deptTime.split(":");
+                            String[] timeRider = currRider.get("depart").split(":");
+                            int timeDriverInt = Integer.parseInt(timeDriver[0]);
+                            int timeRiderInt = Integer.parseInt(timeRider[0]);
+                            int timeDiff = Math.abs(timeDriverInt-timeRiderInt);
+                            String disability = (String)rideInformation.get("disability");
+                            String gender = (String)rideInformation.get("gender");
+                            String start = (String)rideInformation.get("start");
+                            String end = (String)rideInformation.get("end");
+                            if(timeDiff <= 2 && start.toLowerCase().equals(currRider.get("start").toLowerCase()) && end.toLowerCase().equals(currRider.get("end").toLowerCase()) && (gender.equals("All")) || gender.equals(currRider.get("gender"))){
                                 initialData.add(new ListModel(uid, rating));
                             }
-
+                            if(initialData.size()==0){
+                                Toast.makeText(CarpoolCreated.this, "No matching rides :(", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
 
