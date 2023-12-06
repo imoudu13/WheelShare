@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RatePassengers extends AppCompatActivity implements ratingAdapter.OnItemClickListener{
+public class RatePassengers extends AppCompatActivity implements RatingAdapter.OnItemClickListener{
     TextView selectedNameTextView;
     RatingBar bar;
     List<String> names;
