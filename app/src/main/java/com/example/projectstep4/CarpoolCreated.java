@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
@@ -18,8 +19,10 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +34,7 @@ public class CarpoolCreated extends AppCompatActivity {
     Button cancelButton;
     ListView ridersListView;
     DatabaseReference root;
+    Map<String, HashMap<String, String>>  ridersMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,7 @@ public class CarpoolCreated extends AppCompatActivity {
         ArrayList<Double> list = (ArrayList<Double>) intent.getSerializableExtra("latlong");
         HashMap<String, Object> rideInformation = (HashMap<String, Object>) intent.getSerializableExtra("ride info");
 
-        Map<String, HashMap<String, String>>  ridersMap = new HashMap<>();
+        ridersMap = new HashMap<>();
         root = FirebaseDatabase.getInstance().getReference("currentRides");
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +82,6 @@ public class CarpoolCreated extends AppCompatActivity {
 
 
 
-
                                 ridersMap.put(node.getKey(), tempMap);
 
                             }
@@ -100,7 +103,12 @@ public class CarpoolCreated extends AppCompatActivity {
                             String gender = (String)rideInformation.get("gender");
                             String start = (String)rideInformation.get("start");
                             String end = (String)rideInformation.get("end");
-                            if(timeDiff <= 2 && start.toLowerCase().equals(currRider.get("start").toLowerCase()) && end.toLowerCase().equals(currRider.get("end").toLowerCase()) && (gender.equals("All")) || gender.equals(currRider.get("gender"))){
+                            if (timeDiff <= 2 &&
+                                    start.toLowerCase().equals(currRider.get("start").toLowerCase()) &&
+                                    end.toLowerCase().equals(currRider.get("end").toLowerCase()) &&
+                                    ((gender.equals("All") || gender.equals(currRider.get("gender"))) &&
+                                            (disability.toLowerCase().equals(currRider.get("disability").toLowerCase()) || disability.toLowerCase().equals("yes")))) {
+                                boolean t = true;
                                 initialData.add(new ListModel(uid, rating));
                             }
                             if(initialData.size()==0){
@@ -116,17 +124,61 @@ public class CarpoolCreated extends AppCompatActivity {
                 };
         root.get().addOnCompleteListener(onValuesFetched);
 
+        ridersListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String driverUid = (String)rideInformation.get("uid");
+                // Reference to the root node
+                DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference("carpools");
 
+                DatabaseReference keyReference = rootReference.child(driverUid);
+
+                keyReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+
+                            if (dataSnapshot.hasChild("moneyEarned") && dataSnapshot.hasChild("riders")) {
+
+                                Double moneyEarned = dataSnapshot.child("moneyEarned").getValue(Double.class);
+                                String currentRiders = dataSnapshot.child("riders").getValue(String.class);
+                                ListModel clickedItem = (ListModel) parent.getItemAtPosition(position);
+                                String name = clickedItem.getName();
+                                Double riderPay = Double.parseDouble(ridersMap.get(name).get("cost"));
+                                if(!currentRiders.contains(name)){
+                                    boolean t = true;
+                                    moneyEarned += riderPay;
+                                    currentRiders = name + "," + currentRiders;
+                                }
+                                DatabaseReference root = FirebaseDatabase.getInstance().getReference("carpools");
+                                DatabaseReference newRider = root.child(driverUid);
+
+                                //set the username as a new child of the root
+                                newRider.child("moneyEarned").setValue(moneyEarned);
+                                newRider.child("riders").setValue(currentRiders);
+                                boolean t = true;
+
+
+                            } else {
+                                Log.e("Firebase", "Child not found in dataSnapshot");
+                            }
+                        } else {
+                            Log.e("Firebase", "DataSnapshot does not exist");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        Log.e("Firebase", "Failed to read value.", error.toException());
+                    }
+                });
+            }
+        });
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /*Nick: Should create some form of list with all the selected the riders and it should be passed here
-                  select riders also need a boolean value to set that they in the middle of a ride
-                  this is so they dont get shown again and will direct them to the CurrentlyRiding so they cant start a new ride
-                  Riders also need a driver field where it is their drivers uid so they can rate later. Also send the info about the driver
-                * */
                 Intent intent = new Intent(CarpoolCreated.this, Maps.class);
                 intent.putExtra("latlong", list);
                 startActivity(intent);

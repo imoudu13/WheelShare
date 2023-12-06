@@ -110,6 +110,8 @@ public class CreateCarpool extends AppCompatActivity {
                     rideInformation.put("seats", availableSeats);
                     rideInformation.put("disability", disability ? "yes":"no");
                     rideInformation.put("gender", gender);
+                    rideInformation.put("uid",clientMap.get("uid"));
+
 
                     int numRides = Integer.parseInt(clientMap.get("numberOfRides"));
                     numRides += 1;
@@ -172,7 +174,8 @@ public class CreateCarpool extends AppCompatActivity {
         newRider.child("rating").setValue(rating);
         newRider.child("disability").setValue(wheelchair);
         newRider.child("numberOfRides").setValue(number);
-
+        newRider.child("riders").setValue("");
+        newRider.child("moneyEarned").setValue(0);
         root = FirebaseDatabase.getInstance().getReference("driver");
         DatabaseReference update = root.child(username);
         update.child("numberOfRides").removeValue();
