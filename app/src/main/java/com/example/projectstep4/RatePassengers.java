@@ -68,6 +68,14 @@ public class RatePassengers extends AppCompatActivity implements RatingAdapter.O
                 Log.e("Firebase", "Failed to read value.", error.toException());
             }
         });
+        rateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!selectedNameTextView.getText().equals("")){
+                    rate();
+                }
+            }
+        });
     }
 
     private void updateAdapter() {
@@ -100,11 +108,18 @@ public class RatePassengers extends AppCompatActivity implements RatingAdapter.O
     public void rate() {
         String name = selectedNameTextView.getText().toString();
         float rating = bar.getRating();
+        String ratingString = String.valueOf(rating);
         boolean work = names.remove(name);
 
         RatingAdapter adapter = new RatingAdapter(names, RatePassengers.this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(RatePassengers.this));
+        //write to database
+        DatabaseReference root1 = FirebaseDatabase.getInstance().getReference("rider");
+        DatabaseReference newRider1 = root1.child(name);
+
+        //set the username as a new child of the root
+        newRider1.child("rating").setValue(ratingString);
 
         count--;
         selectedNameTextView.setText("");
@@ -115,6 +130,8 @@ public class RatePassengers extends AppCompatActivity implements RatingAdapter.O
     }
 
     public void next() {
-        // Implement your logic for the "Next" button
+        if(rateButton.getText().equals("Next")){
+            //go to homescreen and delete the carpool
+        }
     }
 }
