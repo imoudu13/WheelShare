@@ -133,7 +133,7 @@ public class CreateCarpool extends AppCompatActivity {
                             list.add(endingPositionLong);
 
                             intent.putExtra("latlong", list);
-
+                            intent.putExtra("info",clientMap);
                             startActivity(intent);
                         }
                     }

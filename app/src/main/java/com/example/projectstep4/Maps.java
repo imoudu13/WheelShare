@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,25 +18,45 @@ import com.example.projectstep4.databinding.ActivityMaps2Binding;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Maps extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private ActivityMaps2Binding binding;
     double startingPosLong = 0, startingPosLat = 0, endingPosLat = 0, endingPositionLong = 0;
+    HashMap<String, String> clientMap;
+    Button endRideButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = ActivityMaps2Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        endRideButton = findViewById(R.id.endRideButton);
         Intent intent = getIntent();
-
+        clientMap = (HashMap<String, String>) intent.getSerializableExtra("info");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        endRideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String isRider = clientMap.get("isRider");
+                if(isRider.equals("false")){
+                    Intent intent = new Intent(Maps.this, RatePassengers.class);
+                    intent.putExtra("info", clientMap);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(Maps.this, RateDriver.class);
+                    intent.putExtra("info", clientMap);
+                    startActivity(intent);
+                }
+                boolean t = true;
+            }
+        });
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -55,10 +77,6 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
         mMap.addMarker(new MarkerOptions().position(end).title("finish"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(start));
     }
-    public void endRide(View view){
-        /*We need the rider and driver info/uid from previous intent
-        * to be sent here, the currently riding fields in all the riders should be set to false
-        * and the needsToRate should now be set to true*/
-    }
+
 
 }

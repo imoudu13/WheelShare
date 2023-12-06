@@ -34,6 +34,7 @@ public class CarpoolCreated extends AppCompatActivity {
     Button cancelButton;
     ListView ridersListView;
     DatabaseReference root;
+    HashMap<String, String> clientMap;
     Map<String, HashMap<String, String>>  ridersMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class CarpoolCreated extends AppCompatActivity {
         Intent intent = getIntent();
         ArrayList<Double> list = (ArrayList<Double>) intent.getSerializableExtra("latlong");
         HashMap<String, Object> rideInformation = (HashMap<String, Object>) intent.getSerializableExtra("ride info");
-
+        clientMap = (HashMap<String, String>) intent.getSerializableExtra("info");
         ridersMap = new HashMap<>();
         root = FirebaseDatabase.getInstance().getReference("currentRides");
 
@@ -149,6 +150,7 @@ public class CarpoolCreated extends AppCompatActivity {
                                     boolean t = true;
                                     moneyEarned += riderPay;
                                     currentRiders = name + "," + currentRiders;
+                                    Toast.makeText(CarpoolCreated.this, "Rider added to ride", Toast.LENGTH_SHORT).show();
                                 }
                                 DatabaseReference root = FirebaseDatabase.getInstance().getReference("carpools");
                                 DatabaseReference newRider = root.child(driverUid);
@@ -156,6 +158,13 @@ public class CarpoolCreated extends AppCompatActivity {
                                 //set the username as a new child of the root
                                 newRider.child("moneyEarned").setValue(moneyEarned);
                                 newRider.child("riders").setValue(currentRiders);
+
+                                DatabaseReference root1 = FirebaseDatabase.getInstance().getReference("currentRides");
+                                DatabaseReference newRider1 = root1.child(name);
+
+                                //set the username as a new child of the root
+                                newRider1.child("driverUID").setValue(driverUid);
+
                                 boolean t = true;
 
 
@@ -181,6 +190,7 @@ public class CarpoolCreated extends AppCompatActivity {
 
                 Intent intent = new Intent(CarpoolCreated.this, Maps.class);
                 intent.putExtra("latlong", list);
+                intent.putExtra("info",clientMap);
                 startActivity(intent);
             }
         });

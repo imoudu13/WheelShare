@@ -24,7 +24,7 @@
 
 
         <Button
-            android:id="@+id/yourButtonId"
+            android:id="@+id/endRideButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="endRide"
