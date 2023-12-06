@@ -124,8 +124,8 @@ public class CarpoolCreated extends AppCompatActivity {
 
                 /*Nick: Should create some form of list with all the selected the riders and it should be passed here
                   select riders also need a boolean value to set that they in the middle of a ride
-                  this is so they dont get shown again. Riders also need a driver field where it is their
-                  drivers uid so they can rate later. Also send the info about the driver
+                  this is so they dont get shown again and will direct them to the CurrentlyRiding so they cant start a new ride
+                  Riders also need a driver field where it is their drivers uid so they can rate later. Also send the info about the driver
                 * */
                 Intent intent = new Intent(CarpoolCreated.this, Maps.class);
                 intent.putExtra("latlong", list);

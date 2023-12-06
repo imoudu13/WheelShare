@@ -57,7 +57,8 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
     }
     public void endRide(View view){
         /*We need the rider and driver info/uid from previous intent
-        * to be sent here*/
+        * to be sent here, the currently riding fields in all the riders should be set to false
+        * and the needsToRate should now be set to true*/
     }
 
 }
