@@ -84,7 +84,7 @@
         android:layout_height="55dp"
         android:layout_marginEnd="228dp"
         android:gravity="center"
-        android:text="Departure time"
+        android:text="Departure time:"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
