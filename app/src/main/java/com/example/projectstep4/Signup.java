@@ -132,6 +132,8 @@ public class Signup extends AppCompatActivity {
         newRider.child("end").setValue("");
         newRider.child("depart").setValue("");
         newRider.child("isRider").setValue(true);
+        newRider.child("currentlyRiding").setValue(false);
+        newRider.child("needsToRate").setValue(false);
 
         // should we add other information to the
     }

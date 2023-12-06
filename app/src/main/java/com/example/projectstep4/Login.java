@@ -29,6 +29,7 @@ public class Login extends AppCompatActivity {
     EditText username, password;
     Map<String, HashMap<String, String>> clientMap;
     private DatabaseReference databaseReference;
+    String uid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,8 @@ public class Login extends AppCompatActivity {
                                 tempMap.put("rating", getStringValue(node.child("rating")));
                                 tempMap.put("numberOfRides", getStringValue(node.child("numberOfRides")));
                                 tempMap.put("isRider",getStringValue(node.child("isRider")));
+                                tempMap.put("currentlyRiding", getStringValue(node.child("currentlyRiding")));
+                                tempMap.put("needsToRate", getStringValue(node.child("needsToRate")));
 
 
 
@@ -86,7 +89,7 @@ public class Login extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String uid = username.getText().toString();
+                uid = username.getText().toString();
                 String pw = password.getText().toString();
 
 
@@ -97,14 +100,27 @@ public class Login extends AppCompatActivity {
                     HashMap<String, String> temp = clientMap.get(uid);
 
                     String tempPass = temp.get("password");
+                    String tempRiding = temp.get("currentlyRiding");
+                    String tempRating = temp.get("needsToRate");
+
 
                     if (tempPass.equals(pw)) {
-                        //start next activity, pass necessary information as well
-                        toast = Toast.makeText(context, "This works.", Toast.LENGTH_SHORT);     //this is just for testing, will change later
+                        //If the person exists we make sure they arent currently riding or need to rate before they can ride again
+                        toast = Toast.makeText(context, "This works.", Toast.LENGTH_SHORT);
+                        if(tempRiding.equals("true")) {
+                            Intent intent = new Intent(Login.this,CurrentlyRiding.class);
+                            startActivity(intent);
+                        }
+                        if(tempRating.equals("true")){
+                            Intent intent = new Intent(Login.this, RateDriver.class);
+                            intent.putExtra("uid", uid);
+                            startActivity(intent);
+                        }else{
                         Intent intent = new Intent(Login.this, CreateOrJoin.class);
                         intent.putExtra("info", temp);
                         //what information needs to be passed?
                         startActivity(intent);
+                        }
 
                     } else {
                         toast = Toast.makeText(context, "Incorrect password, please try again.", Toast.LENGTH_SHORT);

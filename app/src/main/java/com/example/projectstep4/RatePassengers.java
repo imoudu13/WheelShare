@@ -25,7 +25,10 @@ public class RatePassengers extends AppCompatActivity implements ratingAdapter.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rate_passengers);
 
-
+        /*Currently set that when you click an item it gets displayed on the textview. You only need to load data in the names arrayList and it should work
+        * Get the list of riders and set the amount to the count variable this makes it so you have to rate all of them
+        * We also need to include the total earnings for driver here
+        * Here we should also set the riders and drivers ride info like start location to null*/
 
         recyclerView = findViewById(R.id.ratingList);
         selectedNameTextView = findViewById(R.id.textView14);
