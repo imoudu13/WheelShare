@@ -7,11 +7,12 @@
     tools:context=".Create_ride">
 
     <EditText
-        android:focusableInTouchMode="false"
         android:id="@+id/setTimeCreateRide"
         android:layout_width="100dp"
         android:layout_height="55dp"
+        android:drawableLeft="@android:drawable/ic_lock_idle_alarm"
         android:ems="10"
+        android:focusableInTouchMode="false"
         android:hint="time"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"

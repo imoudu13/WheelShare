@@ -114,6 +114,7 @@
         android:layout_width="139dp"
         android:layout_height="57dp"
         android:layout_marginStart="25dp"
+        android:drawableLeft="@android:drawable/ic_menu_add"
         android:ems="10"
         android:hint="Seats"
         android:inputType="number"
@@ -143,11 +144,12 @@
 
     <EditText
         android:id="@+id/timeBox"
-        android:focusableInTouchMode="false"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
         android:layout_marginStart="25dp"
+        android:drawableLeft="@android:drawable/ic_lock_idle_alarm"
         android:ems="10"
+        android:focusableInTouchMode="false"
         android:hint="Time"
         android:inputType="time"
         app:layout_constraintBottom_toBottomOf="@+id/textView8"
