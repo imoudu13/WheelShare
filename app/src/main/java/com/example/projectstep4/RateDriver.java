@@ -8,9 +8,12 @@ import android.view.View;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 public class RateDriver extends AppCompatActivity {
 TextView driverName;
 RatingBar rateDriverBar;
+HashMap<String, String> clientMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +22,8 @@ RatingBar rateDriverBar;
         * sent to create page again, this is also why we need the riders to have a driveruid field so
         * we can update driver rating*/
         Intent intent = getIntent();
-        String uid = intent.getStringExtra("uid");
+
+        clientMap = (HashMap<String, String>) intent.getSerializableExtra("info");
         //using this uid get the driver from fb, set name to below
         driverName = findViewById(R.id.textView20);
 
