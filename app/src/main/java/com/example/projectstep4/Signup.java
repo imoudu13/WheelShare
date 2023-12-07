@@ -103,8 +103,9 @@ public class Signup extends AppCompatActivity {
                         Intent intent = new Intent(Signup.this, CreateOrJoin.class);
                         intent.putExtra("info", riderInfo);
 
-                        //what information needs to be passed?
+
                         startActivity(intent);
+                        Toast.makeText(Signup.this, "Account created. Thank you for using our app!", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     Context context = getApplicationContext();

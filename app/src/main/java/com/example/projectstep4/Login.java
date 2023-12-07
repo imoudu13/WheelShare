@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
 
                     if (tempPass.equals(pw)) {
                         //If the person exists we make sure they arent currently riding or need to rate before they can ride again
-                        toast = Toast.makeText(context, "This works.", Toast.LENGTH_SHORT);
+                        toast = Toast.makeText(context, "Login Complete", Toast.LENGTH_SHORT);
                         if(tempRiding.equals("true")) {
                             Intent intent = new Intent(Login.this,CurrentlyRiding.class);
                             startActivity(intent);

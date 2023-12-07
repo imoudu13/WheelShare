@@ -49,10 +49,12 @@ public class Maps extends FragmentActivity implements OnMapReadyCallback {
                     Intent intent = new Intent(Maps.this, RatePassengers.class);
                     intent.putExtra("info", clientMap);
                     startActivity(intent);
+                    Toast.makeText(Maps.this, "Ride Complete. Please Rate Your Passengers", Toast.LENGTH_SHORT).show();
                 }else{
                     Intent intent = new Intent(Maps.this, RateDriver.class);
                     intent.putExtra("info", clientMap);
                     startActivity(intent);
+                    Toast.makeText(Maps.this, "Ride Complete. Please Rate Your Driver", Toast.LENGTH_SHORT).show();
                 }
                 boolean t = true;
             }

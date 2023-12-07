@@ -89,6 +89,7 @@ public class confirmRide extends AppCompatActivity {
                     intent.putExtra("latlong", list);
                     intent.putExtra("info",clientMap);
                     startActivity(intent);
+                    Toast.makeText(confirmRide.this, "Ride Creation Complete. Your driver will come pick you up shortly", Toast.LENGTH_SHORT).show();
                 }
             }
         });

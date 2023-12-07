@@ -85,6 +85,7 @@ public class Create_ride extends AppCompatActivity {
                             intent.putExtra("wheelchair",isWheelchair);
                             intent.putExtra("info", clientMap);
                             startActivity(intent);
+                            Toast.makeText(Create_ride.this, "Ride Created. Please Enter Payment Information", Toast.LENGTH_SHORT).show();
                         }
                     }
 
