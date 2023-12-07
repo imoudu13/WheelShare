@@ -1,5 +1,6 @@
 package com.example.projectstep4;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -134,6 +138,22 @@ public class RatePassengers extends AppCompatActivity implements RatingAdapter.O
         if(rateButton.getText().equals("Next")){
             Intent intent = new Intent(RatePassengers.this, MainActivity.class);
             startActivity(intent);
+
+            DatabaseReference root2 = FirebaseDatabase.getInstance().getReference("carpools");
+            DatabaseReference userToRemove = root2.child(clientMap.get("uid"));
+
+            userToRemove.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(RatePassengers.this, "Current ride over. Create new rides as you desire!", Toast.LENGTH_SHORT).show();
+                        Log.d("Firebase", "User removed from currentRides node");
+                    } else {
+                        // Handle the error here
+                        Log.e("Firebase", "Error removing user from currentRides node: " + task.getException().getMessage());
+                    }
+                }
+            });
         }
     }
 }
