@@ -36,6 +36,8 @@ public class CarpoolCreated extends AppCompatActivity {
     DatabaseReference root;
     HashMap<String, String> clientMap;
     Map<String, HashMap<String, String>>  ridersMap;
+    int numInCarpoolCurr;
+    int maxNumInCarpool;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +51,8 @@ public class CarpoolCreated extends AppCompatActivity {
         clientMap = (HashMap<String, String>) intent.getSerializableExtra("info");
         ridersMap = new HashMap<>();
         root = FirebaseDatabase.getInstance().getReference("currentRides");
-
+        maxNumInCarpool = (int)rideInformation.get("seats");
+        boolean t = true;
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +143,10 @@ public class CarpoolCreated extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
 
                             if (dataSnapshot.hasChild("moneyEarned") && dataSnapshot.hasChild("riders")) {
-
+                                if(numInCarpoolCurr >= maxNumInCarpool){
+                                    Toast.makeText(CarpoolCreated.this, "You have reached the max number of riders. Please continue", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 Double moneyEarned = dataSnapshot.child("moneyEarned").getValue(Double.class);
                                 String currentRiders = dataSnapshot.child("riders").getValue(String.class);
                                 ListModel clickedItem = (ListModel) parent.getItemAtPosition(position);
@@ -165,6 +171,7 @@ public class CarpoolCreated extends AppCompatActivity {
                                 //set the username as a new child of the root
                                 newRider1.child("driverUID").setValue(driverUid);
 
+                                numInCarpoolCurr ++;
                                 boolean t = true;
 
 
