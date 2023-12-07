@@ -87,7 +87,7 @@ public class confirmRide extends AppCompatActivity {
                     list.add(endLong);
 
                     intent.putExtra("latlong", list);
-
+                    intent.putExtra("info",clientMap);
                     startActivity(intent);
                 }
             }
