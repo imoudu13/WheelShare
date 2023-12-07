@@ -6,39 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="120dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="172dp"
-        android:gravity="center"
-        android:text="Username:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/usernameBox"
-        app:layout_constraintHorizontal_bias="0.424"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="120dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:gravity="center"
-        android:text="Password:"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/passwordBox"
-        app:layout_constraintHorizontal_bias="0.608"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
     <EditText
         android:id="@+id/usernameBox"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_marginTop="172dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="436dp"
+        android:layout_marginEnd="12dp"
         android:drawableLeft="@android:drawable/ic_menu_share"
         android:ems="10"
         android:hint="Username"
@@ -46,12 +19,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:text="Password:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/passwordBox"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="120dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="436dp"
+        android:gravity="center"
+        android:text="Username:"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/usernameBox"
+        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/passwordBox"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="12dp"
         android:drawableLeft="@android:drawable/ic_menu_view"
         android:ems="10"
         android:hint="Password"
@@ -63,9 +63,20 @@
         android:id="@+id/LoginSubmit"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="144dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="16dp"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="555dp"
+        android:layout_height="422dp"
+        android:layout_marginBottom="356dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/carpool" />
 </androidx.constraintlayout.widget.ConstraintLayout>
