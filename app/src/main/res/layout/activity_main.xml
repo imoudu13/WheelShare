@@ -21,10 +21,11 @@
         android:layout_height="60dp"
         android:layout_marginEnd="144dp"
         android:text="Login"
+        android:tooltipText="Login to service"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.274"
-        android:tooltipText="Login to service" />
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
