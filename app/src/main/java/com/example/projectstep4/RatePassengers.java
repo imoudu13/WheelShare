@@ -74,6 +74,7 @@ public class RatePassengers extends AppCompatActivity implements RatingAdapter.O
                 if(!selectedNameTextView.getText().equals("")){
                     rate();
                 }
+                next();
             }
         });
     }
@@ -131,7 +132,8 @@ public class RatePassengers extends AppCompatActivity implements RatingAdapter.O
 
     public void next() {
         if(rateButton.getText().equals("Next")){
-            //go to homescreen and delete the carpool
+            Intent intent = new Intent(RatePassengers.this, MainActivity.class);
+            startActivity(intent);
         }
     }
 }
