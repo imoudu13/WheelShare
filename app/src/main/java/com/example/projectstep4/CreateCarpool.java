@@ -117,7 +117,7 @@ public class CreateCarpool extends AppCompatActivity {
                     numRides += 1;
 
                     //write to FB
-                    writeToFB(clientMap.get("uid"), start, end, deptTime, clientMap.get("rating"), disability ? "yes" : "no", String.valueOf(numRides));
+
 
                     Intent intent = new Intent(CreateCarpool.this, CarpoolCreated.class);
                     intent.putExtra("ride info", rideInformation);      //pass the ride information map
@@ -126,7 +126,7 @@ public class CreateCarpool extends AppCompatActivity {
                     if(getStartLatLong(start)){
                         if(getEndLatLong(end)){
                             ArrayList<Double> list = new ArrayList<>();
-
+                            writeToFB(clientMap.get("uid"), start, end, deptTime, clientMap.get("rating"), disability ? "yes" : "no", String.valueOf(numRides));
                             list.add(startingPosLong);
                             list.add(startingPosLat);
                             list.add(endingPosLat);
